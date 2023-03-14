@@ -1,0 +1,17 @@
+{
+  "encoded": "MFMCAQEwBQYDK2VwBCIEILAU/2iMMCYkiQtvsuIsgehLhoJvTGjvblG9Ken0rflmCjOuXx+PUPSOCR80y1FBHJ2ASIgC1lB+QWWNxpWzDMyhIwMhAE6J0XMGq62Ai3hmK/1xMpMXRqhuNn1Z+T6X2U4o2l1x",
+  "encoding": {
+    "content": [
+      "pkcs8",
+      "sr25519"
+    ],
+    "type": [
+      "none"
+    ],
+    "version": "3"
+  },
+  "address": "5DqgXrJKsUwTLZeedgU3tBhNT47vxm11cdA11spXLmKgedza",
+  "meta": {
+    "name": "acala-uno-learn-polkadot-acala"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "encoded": "MFMCAQEwBQYDK2VwBCIEICgHoPoKdTWV1stpcBVKhVPeqkPu96elct1KzEGwbSpKAT/9BC9OGwA5TvtSr2P4eW/U0eunuxGbin3lX6YM7u2hIwMhACoWwX+ivYZcC8jX0TQCHDGzJerQ0cwktBv63wyWBMcw",
+  "encoding": {
+    "content": [
+      "pkcs8",
+      "sr25519"
+    ],
+    "type": [
+      "none"
+    ],
+    "version": "3"
+  },
+  "address": "5D1tdPadpW4U22i1EmbyFSeTJQpYBL8VVTbU18Q3AL8jw8QE",
+  "meta": {
+    "name": "learn-polkadot"
+  }
+}
