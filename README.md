@@ -1,6 +1,15 @@
-# polkadot-js-api-ts-template
+### Pre-requisite installation
 
-My personal, beloved template to quickly start hacking in top of any substrate based chain with
-`@polkadot/api`.
+- Install node-js 14
+- Install npm
 
-See [`package.json`](./package.json) to see what's up 🔥🔥.
+[https://docs.npmjs.com/downloading-and-installing-node-js-and-npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+
+- Install ts-node npm package globally in your system
+
+```
+npm install -g typescript
+npm install -g ts-node
+```
+
+[https://www.npmjs.com/package/ts-node](https://www.npmjs.com/package/ts-node)
