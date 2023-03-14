@@ -13,3 +13,14 @@ npm install -g ts-node
 ```
 
 [https://www.npmjs.com/package/ts-node](https://www.npmjs.com/package/ts-node)
+
+
+
+### Running code samples
+
+
+```
+npm install
+```
+
+it will install all the packages from package.json
