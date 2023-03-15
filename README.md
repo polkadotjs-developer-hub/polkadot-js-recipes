@@ -18,9 +18,23 @@ npm install -g ts-node
 
 ### Running code samples
 
-
+Install all the packages from package.json
 ```
 npm install
 ```
 
-it will install all the packages from package.json
+
+Run specific examples
+```
+ts-node <filename.ts>
+```
+
+
+### Configuring blockchain network
+
+file name/path :
+
+```
+ .env
+```
+we provide the websocket url of blockchain network in the file above
