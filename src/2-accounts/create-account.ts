@@ -27,7 +27,7 @@ const main = async () => {
 
   // Create mnemonic string for your own account using BIP39
   const MNEMONIC = mnemonicGenerate()
-  console.log(`\n mnemonicGenerate: ${MNEMONIC}`)
+  console.log(`\n Mnenomic generated: ${MNEMONIC}`)
 
 
   /*
@@ -37,8 +37,8 @@ const main = async () => {
   const newAccount = await keyring.addFromUri(`${MNEMONIC}`, { name: 'learn-polkadot' })
 
   // Display the metadata name & Substrate generic ss58Format encoded address
-  console.log('\n',newAccount.meta.name, 'has address', newAccount.address)
-
+  console.log(`\n Address:  ${newAccount.address}`)
+  console.log(`\n Public Key:  ${newAccount.publicKey}`)
 }
 
 main().catch((err) => {
