@@ -27,11 +27,7 @@ const main = async () => {
 
   // Create mnemonic string for your own account using BIP39
   const MNEMONIC = mnemonicGenerate()
-  console.log(`mnemonicGenerate: ${MNEMONIC}`)
-
-  // Validate the mnemonic string that was generated, returns a boolean
-  const isValidMnemonic = mnemonicValidate(MNEMONIC)
-  console.log(`isValidMnemonic: ${isValidMnemonic}`)
+  console.log(`\n mnemonicGenerate: ${MNEMONIC}`)
 
 
   /*
@@ -40,11 +36,8 @@ const main = async () => {
    */
   const newAccount = await keyring.addFromUri(`${MNEMONIC}`, { name: 'learn-polkadot' })
 
-  // Show the pair has been added to our keyring
-  console.log(keyring.pairs.length, ' available keypair(s)')
-
   // Display the metadata name & Substrate generic ss58Format encoded address
-  console.log(newAccount.meta.name, 'has address', newAccount.address)
+  console.log('\n',newAccount.meta.name, 'has address', newAccount.address)
 
 
   /*  
@@ -58,7 +51,7 @@ const main = async () => {
 
   // Write the data to disk
   fs.writeFileSync(`${fileName}.json`, accountData);
-  console.log(`Wrote accountData to ./${fileName}.json`);
+  console.log(`\n Wrote accountData to ./${fileName}.json`);
 
 }
 
