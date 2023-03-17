@@ -39,20 +39,6 @@ const main = async () => {
   // Display the metadata name & Substrate generic ss58Format encoded address
   console.log('\n',newAccount.meta.name, 'has address', newAccount.address)
 
-
-  /*  
-   3. Persist the account data  
-   Convert the account data to JSON and format it for readability    
-   */
-  const accountData = JSON.stringify(keyring.toJson(newAccount.address), null, 2);
-
-  // Generate a filename from the account address
-  const fileName = newAccount.address.substr(0, 8).toUpperCase();
-
-  // Write the data to disk
-  fs.writeFileSync(`${fileName}.json`, accountData);
-  console.log(`\n Wrote accountData to ./${fileName}.json`);
-
 }
 
 main().catch((err) => {
