@@ -38,7 +38,7 @@ async function main() {
     console.log(`\n Account ${SENDER_ACCOUNT} has a balance of ${data.free}`);
 
     const WND_AMOUNT = 0.01;
-    console.log(`\n Amount to be transferred: ${WND_AMOUNT}`);
+    console.log(`\n Request amount: ${WND_AMOUNT}`);
     
     /**
      * 2. calculate transaction fees
@@ -54,7 +54,7 @@ async function main() {
 
     // Calculate the total amount to be transferred
     let totalAmount = WND_AMOUNT + totalTransactionAmount;
-    console.log(`\n Total amount to be transferred: ${totalAmount}`);
+    console.log(`\n Total amount = requested amount + transaction fees : ${totalAmount}`);
    
 
     // /**
