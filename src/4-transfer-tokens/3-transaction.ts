@@ -57,28 +57,29 @@ async function main() {
     console.log(`\n Total amount = requested amount + transaction fees : ${totalAmount}`);
    
 
-    // /**
-    //  * 3. Transfer tokens from the sender account to the receiver account
-    //  *      and print the transaction hash
-    //  **/ 
-    // const txHash = await api.tx.balances
-    //     .transfer(RECEIVER_ACCOUNT, convertedAmount)
-    //     .signAndSend(account);
+    /**
+     * 3. Transfer tokens from the sender account to the receiver account
+     *      and print the transaction hash
+     **/ 
+    const txHash = await api.tx.balances
+        .transfer(RECEIVER_ACCOUNT, convertedAmount)
+        .signAndSend(account);
 
-    // console.log(`\n Transaction hash: https://westend.subscan.io/extrinsic/${txHash}`);
+    // Redirect to the transaction hash on the Subscan explorer
+    console.log(`\n Check transaction status on the Subscan explorer : https://westend.subscan.io/extrinsic/${txHash}`);
 
 
-    // /**
-    //  * 4. Retrieve the balance of the sender and receiver account after the transfer
-    //  *  
-    //  **/
+    /**
+     * 4. Retrieve the balance of the sender and receiver account after the transfer
+     *  
+     **/
 
-    // // balance of the sender account after the transfer
-    // let { data: senderBalance } = await api.query.system.account(SENDER_ACCOUNT);
-    // console.log(`\n Account ${SENDER_ACCOUNT} has a balance of ${senderBalance.free}`)
-    // // balance of the receiver account after the transfer
-    // let { data: receiverBalance } = await api.query.system.account(RECEIVER_ACCOUNT);
-    // console.log(`\n Account ${RECEIVER_ACCOUNT} has a balance of ${receiverBalance.free}`) 
+    // balance of the sender account after the transfer
+    let { data: senderBalance } = await api.query.system.account(SENDER_ACCOUNT);
+    console.log(`\n Sender Account ${SENDER_ACCOUNT} has a balance of ` + toUnit(senderBalance.free, api) + ` after the transfer`);
+    // balance of the receiver account after the transfer
+    let { data: receiverBalance } = await api.query.system.account(RECEIVER_ACCOUNT);
+    console.log(`\n Receiver Account ${RECEIVER_ACCOUNT} has a balance of ` + toUnit(receiverBalance.free, api) + ` after the transfer`);
 }
 
 
