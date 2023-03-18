@@ -12,17 +12,15 @@ async function main() {
 	const wsProvider = new WsProvider(process.env.WS_URL);
 	// Create a new instance of the api
 	const api = await ApiPromise.create({ provider: wsProvider, noInitWarn: true });
-	const chainDecimals = await api.registry.chainDecimals[0];
 
 	/**
 	 * 1. Retrieve the existential deposit of the chain
 	 * 	  Existential deposit is the minimum balance required to create an account
 	 */
 	const ED: Balance = api.consts.balances.existentialDeposit;
-	const { tokenSymbol } = await api.rpc.system.properties();
 	// Convert the balance to a human readable format
-	const amount = toUnit(ED, chainDecimals);
-	console.log(`\n Existential deposit  ----- ${amount} ${tokenSymbol}`);
+	const transferAmount = toUnit(ED, api);
+	console.log(`\n Existential deposit  ----- ${transferAmount}`);
 
 }
 

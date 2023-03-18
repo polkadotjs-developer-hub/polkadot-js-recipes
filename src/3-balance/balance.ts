@@ -29,13 +29,9 @@ async function main() {
 	 * 2. Convert the balance to a human readable format
 	 */
 
-	// Get the token symbol, WND for Westend
-	const { tokenSymbol } = await api.rpc.system.properties();
-	// Get the chain decimals, 12 for Westend
-	const chainDecimals = await api.registry.chainDecimals[0];
 	// Convert the balance to a human readable format
-	const amount = toUnit(data.free, chainDecimals);
-	console.log(`\n Westend balance --------  ${amount} ${tokenSymbol}`);
+	const transferAmount = toUnit(data.free, api);
+	console.log(`\n Westend balance --------  ${transferAmount}`);
 }
 
 
