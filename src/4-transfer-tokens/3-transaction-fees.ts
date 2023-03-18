@@ -35,11 +35,9 @@ async function main() {
     .paymentInfo(account);
     
     // log relevant info, partialFee is Balance, estimated for current
-    console.log(`
-        class=${info.class.toString()},
-        weight=${info.weight.toString()},
-        partialFee=t${info.partialFee.toHuman()}
-    `);
+    const decimal = api.registry.chainDecimals[0];
+    let transactionFees = toUnit(info.partialFee, decimal);
+    console.log(`\n Transaction fees: ${transactionFees}`);
 }
 
 
