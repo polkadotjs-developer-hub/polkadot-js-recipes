@@ -20,9 +20,9 @@ const main = async () => {
   // Create a new instance of the keyring with the default sr25519 type
   const keyring = new Keyring({ type: 'sr25519' });;
 
-  /* 
-    1. Generate a mnemonic 
-    The mnemonic is a string of 12 words that can be used to generate a private key.
+  /**
+   * 1. Generate a mnemonic 
+   * The mnemonic is a string of 12 words that can be used to generate a private key.
    */
 
   // Create mnemonic string for your own account using BIP39
@@ -30,9 +30,9 @@ const main = async () => {
   console.log(`\n Mnenomic generated: ${MNEMONIC}`)
 
 
-  /*
-    2. Create an account  
-    Add account with keypair from the generated mnemonic
+  /**
+   * 2. Create an account  
+   * Add account with keypair from the generated mnemonic
    */
   const newAccount = await keyring.addFromUri(`${MNEMONIC}`, { name: 'learn-polkadot' })
 

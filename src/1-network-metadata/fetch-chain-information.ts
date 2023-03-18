@@ -12,11 +12,13 @@ async function main () {
   // Create a new instance of APIPromise with the websocket provider
   const api = await ApiPromise.create({ provider: wsProvider , noInitWarn: true});
   
-  // get the chain information
+  /**
+   *  1. fetch the chain information
+   */
   const chainInfo = await api.registry.getChainProperties()
   console.log(`chainInfo ${chainInfo}`);
 
-  // for Westend network it would print
+  // output for above code for Westend network
   // {"ss58Format":42,"tokenDecimals":[12],"tokenSymbol":["WND"]}
 }
 

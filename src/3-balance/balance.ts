@@ -7,9 +7,9 @@ import { ApiPromise, WsProvider } from '@polkadot/api';
 import * as dotenv from 'dotenv'
 dotenv.config()
 
-/*
-	TODO: add your account address here
-*/
+/**
+ * TODO: add your account address here
+ */
 const ACCOUNT = '5D1tdPadpW4U22i1EmbyFSeTJQpYBL8VVTbU18Q3AL8jw8QE';
 
 async function main() {
@@ -18,16 +18,16 @@ async function main() {
 	// Create a new instance of the api
 	const api = await ApiPromise.create({ provider: wsProvider, noInitWarn: true });
 
-	/* 	
-		1. Retrieve the initial balance of the account.
+	/**
+	 * 1. Retrieve the initial balance of the account.
 	 */
 	let { data } = await api.query.system.account(ACCOUNT);
 	console.log(`\n Account ${ACCOUNT} has a balance of ${data.free}`);
 
 
-	/* 
-		2. Convert the balance to a human readable format
-	*/
+	/**
+	 * 2. Convert the balance to a human readable format
+	 */
 
 	// Get the token symbol, WND for Westend
 	const { tokenSymbol } = await api.rpc.system.properties();
