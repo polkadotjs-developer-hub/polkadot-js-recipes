@@ -1,17 +1,10 @@
 import { ApiPromise, WsProvider, Keyring } from '@polkadot/api';
-const {
-  mnemonicGenerate,
-  mnemonicValidate,
-} = require('@polkadot/util-crypto');
-const {
-  stringToU8a,
-  u8aToString,
-  u8aToHex
-} = require('@polkadot/util');
-const fs = require('fs');
-require("dotenv").config();
+import { mnemonicGenerate } from '@polkadot/util-crypto';
+import * as dotenv from 'dotenv'
+dotenv.config()
 
-const main = async () => {
+async function main () {
+
   const wsProvider = new WsProvider(process.env.WS_URL);
 
   // Create a new instance of the api
@@ -34,7 +27,7 @@ const main = async () => {
    * 2. Create an account  
    * Add account with keypair from the generated mnemonic
    */
-  const newAccount = await keyring.addFromUri(`${MNEMONIC}`, { name: 'learn-polkadot' })
+  const newAccount = await keyring.addFromUri(`${MNEMONIC}`);
 
   // Display the metadata name & Substrate generic ss58Format encoded address
   console.log(`\n Address:  ${newAccount.address}`)

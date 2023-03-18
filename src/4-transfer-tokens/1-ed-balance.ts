@@ -4,7 +4,7 @@ import '@polkadot/types-augment';
 
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { Balance } from '@polkadot/types/interfaces/runtime';
-import toUnit from './utils/unitConversions';
+import { toUnit } from '../utils/unitConversions';
 import * as dotenv from 'dotenv'
 dotenv.config()
 
@@ -13,17 +13,16 @@ async function main() {
 	// Create a new instance of the api
 	const api = await ApiPromise.create({ provider: wsProvider, noInitWarn: true });
 	const chainDecimals = await api.registry.chainDecimals[0];
-	// Create connection to websocket
-	console.log(
-		`Connected to chain : ${(await api.rpc.system.chain()).toHuman()}`
-	);
 
-	// reading a constant
+	/**
+	 * 1. Retrieve the existential deposit of the chain
+	 * 	  Existential deposit is the minimum balance required to create an account
+	 */
 	const ED: Balance = api.consts.balances.existentialDeposit;
 	const { tokenSymbol } = await api.rpc.system.properties();
-	console.log(`ED Balance ${ED.toHuman()}`);
+	// Convert the balance to a human readable format
 	const amount = toUnit(ED, chainDecimals);
-	console.log(`amount --------  ${amount} ${tokenSymbol}`);
+	console.log(`\n Existential deposit  ----- ${amount} ${tokenSymbol}`);
 
 }
 

@@ -1,7 +1,7 @@
 // needed as of 7.x series, see CHANGELOG of the api repo.
 import '@polkadot/api-augment';
 import '@polkadot/types-augment';
-import toUnit from '../utils/unitConversions';
+import { toUnit } from '../utils/unitConversions';
 
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import * as dotenv from 'dotenv'
@@ -35,7 +35,7 @@ async function main() {
 	const chainDecimals = await api.registry.chainDecimals[0];
 	// Convert the balance to a human readable format
 	const amount = toUnit(data.free, chainDecimals);
-	console.log(`Westend balance --------  ${amount} ${tokenSymbol}`);
+	console.log(`\n Westend balance --------  ${amount} ${tokenSymbol}`);
 }
 
 
