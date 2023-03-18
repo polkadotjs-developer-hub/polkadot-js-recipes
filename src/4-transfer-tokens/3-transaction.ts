@@ -37,24 +37,24 @@ async function main() {
     let { data } = await api.query.system.account(SENDER_ACCOUNT);
     console.log(`\n Account ${SENDER_ACCOUNT} has a balance of ${data.free}`);
 
-    const WND_AMOUNT = 0.01;
-    console.log(`\n Request amount: ${WND_AMOUNT}`);
+    const requestedAmount = 0.01;
+    console.log(`\n Requested amount: ${requestedAmount}`);
     
     /**
      * 2. calculate transaction fees
      **/
-    const convertedAmount = toBalance(WND_AMOUNT,api);
+    const convertedAmount = toBalance(requestedAmount,api);
     const info = await api.tx.balances
         .transfer(RECEIVER_ACCOUNT, convertedAmount)
         .paymentInfo(account);
 
     // Convert the transaction fees to a human readable format
-    let totalTransactionAmount = toUnitAmount(info.partialFee, api);
-    console.log(`\n Transaction fees: ${totalTransactionAmount}`);
+    let transactionFees = toUnitAmount(info.partialFee, api);
+    console.log(`\n Transaction fees: ${transactionFees}`);
 
     // Calculate the total amount to be transferred
-    let totalAmount = WND_AMOUNT + totalTransactionAmount;
-    console.log(`\n Total amount = requested amount + transaction fees : ${totalAmount}`);
+    let totalAmount = requestedAmount + transactionFees;
+    console.log(`\n Total amount = requested amount(${requestedAmount}) + transaction fees(${transactionFees}) : ${totalAmount}`);
    
 
     /**
