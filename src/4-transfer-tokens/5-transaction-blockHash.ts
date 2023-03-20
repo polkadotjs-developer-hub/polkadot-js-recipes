@@ -66,15 +66,16 @@ async function main() {
         .signAndSend(senderAccount, ({status ,txHash }) => {
 
             if (status.isInBlock) {
+              console.log(`\n\n######################################## Transaction status ############################################`);
               console.log(`\n Check transaction status on the Subscan explorer : https://westend.subscan.io/extrinsic/${txHash}`);
-              console.log(`\n\n######################################## Transaction pending ##########################################`);
+              console.log(`\n\n######################################## Transaction pending ###########################################`);
               console.log(`\n Transaction included at blockHash ${status.asInBlock}`);
-              console.log(`\n Check block status on the Subscan explorer : https://westend.subscan.io/block/${status.asInBlock}`);
+              console.log(`\n Check block status for pending transaction on the Subscan explorer : https://westend.subscan.io/block/${status.asInBlock}`);
 
             } else if (status.isFinalized) {
               console.log(`\n\n######################################## Transaction finalized ##########################################`);
               console.log(`\n Transaction finalized at blockHash ${status.asFinalized}`);
-              console.log(`\n Check finalized transaction block status on the Subscan explorer : https://westend.subscan.io/block/${status.asFinalized}`);
+              console.log(`\n Check block status for finalized transaction on the Subscan explorer : https://westend.subscan.io/block/${status.asFinalized}`);
 
             }
         });
