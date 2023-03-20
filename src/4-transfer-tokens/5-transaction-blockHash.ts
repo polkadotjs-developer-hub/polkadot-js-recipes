@@ -29,11 +29,15 @@ async function main() {
     // Create a new instance of the api
     const api = await ApiPromise.create({ provider: wsProvider, noInitWarn: true });
 
+    console.log(`\n######################################## Transaction initiating ############################################`);
+
+  
     /**
      * 1. Retrieve the initial balance of the account.
      */
     const keyring = new Keyring({type: 'sr25519'});
     const senderAccount = keyring.addFromUri(SENDER_MNEMONIC);
+
     let { data } = await api.query.system.account(SENDER_ACCOUNT);
     console.log(`\n Account ${SENDER_ACCOUNT} has a balance of ${data.free}`);
 
