@@ -39,7 +39,7 @@ async function main() {
     const senderAccount = keyring.addFromUri(SENDER_MNEMONIC);
 
     let { data } = await api.query.system.account(SENDER_ACCOUNT);
-    console.log(`\n Account ${SENDER_ACCOUNT} has a balance of ${data.free}`);
+    console.log(`\n Account ${SENDER_ACCOUNT} has a balance of ` + toUnit(data.free, api));
 
     const requestedAmount = 0.001;
     console.log(`\n Requested amount: ${requestedAmount}`);
@@ -73,12 +73,12 @@ async function main() {
               console.log(`\n\n######################################## Transaction status ############################################`);
               console.log(`\n Check transaction status on the Subscan explorer : https://westend.subscan.io/extrinsic/${txHash}`);
               console.log(`\n\n######################################## Transaction pending ###########################################`);
-              console.log(`\n Transaction included at blockHash ${status.asInBlock}`);
+              console.log(`\n Transaction included at blockHash : ${status.asInBlock}`);
               console.log(`\n Check block status for pending transaction on the Subscan explorer : https://westend.subscan.io/block/${status.asInBlock}`);
 
             } else if (status.isFinalized) {
               console.log(`\n\n######################################## Transaction finalized ##########################################`);
-              console.log(`\n Transaction finalized at blockHash ${status.asFinalized}`);
+              console.log(`\n Transaction finalized at blockHash : ${status.asFinalized}`);
               console.log(`\n Check block status for finalized transaction on the Subscan explorer : https://westend.subscan.io/block/${status.asFinalized}`);
               console.log(`\n\n######################################## Transaction successful ########################################`);
 
