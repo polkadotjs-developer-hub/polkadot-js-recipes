@@ -28,6 +28,8 @@ async function main() {
     const wsProvider = new WsProvider(process.env.WS_URL);
     // Create a new instance of the api
     const api = await ApiPromise.create({ provider: wsProvider, noInitWarn: true });
+    
+    console.log(`\n######################################## Transaction initiating ############################################`);
 
     /**
      * 1. Retrieve the initial balance of the account.
