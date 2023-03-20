@@ -81,8 +81,6 @@ async function main() {
         });
 
 
-    // Redirect to the transaction hash on the Subscan explorer
-
 }
 
 
