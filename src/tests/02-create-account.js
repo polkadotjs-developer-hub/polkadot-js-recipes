@@ -1,4 +1,4 @@
-import { ApiPromise, WsProvider ,Keyring} from '@polkadot/api';
+const { ApiPromise, WsProvider ,Keyring} =  require('@polkadot/api');
 const {
   mnemonicGenerate,
   mnemonicValidate,

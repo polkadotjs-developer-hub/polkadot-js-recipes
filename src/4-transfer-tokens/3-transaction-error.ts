@@ -33,11 +33,11 @@ async function main() {
      * 1. Retrieve the initial balance of the account.
      */
     const keyring = new Keyring({type: 'sr25519'});
-    const account = keyring.addFromUri(SENDER_MNEMONIC);
+    const senderAccount = keyring.addFromUri(SENDER_MNEMONIC);
     let { data } = await api.query.system.account(SENDER_ACCOUNT);
     console.log(`\n Account ${SENDER_ACCOUNT} has a balance of ${data.free}`);
 
-    const requestedAmount = 0.001;
+    const requestedAmount = 100;
     console.log(`\n Requested amount: ${requestedAmount}`);
     
     /**
@@ -46,7 +46,7 @@ async function main() {
     const convertedAmount = toBalance(requestedAmount,api);
     const info = await api.tx.balances
         .transfer(RECEIVER_ACCOUNT, convertedAmount)
-        .paymentInfo(account);
+        .paymentInfo(senderAccount);
 
     // Convert the transaction fees to a human readable format
     let transactionFees = toUnitAmount(info.partialFee, api);
@@ -63,19 +63,27 @@ async function main() {
      **/ 
     const txHash = await api.tx.balances
         .transfer(RECEIVER_ACCOUNT, convertedAmount)
-        .signAndSend(account, (result) => {
-            console.log(`\n Current status is ${result.status}`);
-        
-            if (result.status.isInBlock) {
-              console.log(`\n Transaction included at blockHash ${result.status.asInBlock}`);
-            } else if (result.status.isFinalized) {
-              console.log(`\n Transaction finalized at blockHash ${result.status.asFinalized}`);
+        .signAndSend(senderAccount, ({ status, events, dispatchError,txHash }) => {
+            // status would still be set, but in the case of error we can shortcut
+            // to just check it (so an error would indicate InBlock or Finalized)
+            if (dispatchError) {
+              if (dispatchError.isModule) {
+                // for module errors, we have the section indexed, lookup
+                const decoded = api.registry.findMetaError(dispatchError.asModule);
+                const { docs, name, section } = decoded;
+                console.log(`\n########################### Transaction failed ###############################`);
+                console.log(`\n Transaction failed with error: ${section}.${name} : ${docs.join(' ')}`);
+                console.log(`\n Check failed transaction status on the Subscan explorer : https://westend.subscan.io/extrinsic/${txHash}`);
+
+              } else {
+                // Other, CannotLookup, BadOrigin, no extra info
+                console.log(dispatchError.toString());
+              }
             }
-        });
+          });
 
 
     // Redirect to the transaction hash on the Subscan explorer
-    console.log(`\n Check transaction status on the Subscan explorer : https://westend.subscan.io/extrinsic/${txHash}`);
 
 }
 
