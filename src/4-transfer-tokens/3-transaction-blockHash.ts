@@ -80,6 +80,8 @@ async function main() {
               console.log(`\n\n######################################## Transaction finalized ##########################################`);
               console.log(`\n Transaction finalized at blockHash ${status.asFinalized}`);
               console.log(`\n Check block status for finalized transaction on the Subscan explorer : https://westend.subscan.io/block/${status.asFinalized}`);
+              console.log(`\n\n######################################## Transaction successful ########################################`);
+
 
             }
         });
