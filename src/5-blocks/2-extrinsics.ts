@@ -33,21 +33,21 @@ async function main() {
   // Get the block for the block hash
   const signedBlock = await api.rpc.chain.getBlock(blockHash);
 
-  console.log(`\n######################################## Extrinsic events ############################################`);
+  // Decode the extrinsics in the block
 
-  /**
-   * 2. Print the extrinsics and events for the block
-   */
-  signedBlock.block.extrinsics.forEach(({ method: { method, section } }, index) => {
-
-    console.log(`\n Extrinsic ${index} is ${section}.${method}`);
-    events
-      .forEach(({ event }) => {
-        console.log(`\n Event ${event.section}.${event.method}:: ${JSON.stringify(event.data)}`);
-
-      });
-
+  // Decode the extrinsics
+  const extrinsics = signedBlock.block.extrinsics;
+  extrinsics.forEach((extrinsic, index) => {
+    console.log(`Extrinsic ${index}:`);
+    console.log(`  Method: ${extrinsic.method.section}.${extrinsic.method.method}`);
+    console.log(`  Args: ${extrinsic.method.args.map((arg) => arg.toString())}`);
+    console.log(`  Signer: ${extrinsic.signer.toString()}`);
+    console.log(`  Signature: ${extrinsic.signature.toString()}`);
+    console.log(`  Nonce: ${extrinsic.nonce.toString()}`);
+    console.log(`  Era: ${extrinsic.era.toString()}`);
+    console.log(`  Tip: ${extrinsic.tip.toString()}`);
   });
+
 }
 
 main().catch(console.error);
