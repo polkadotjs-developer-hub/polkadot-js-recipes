@@ -30,9 +30,9 @@ ts-node <filename.ts>
 ```
 
 
-### Configuring blockchain network
+### Connecting to blockchain network
 
-file name/path :
+In the file 
 
 ```
  .env
