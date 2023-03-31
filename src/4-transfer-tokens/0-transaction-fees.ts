@@ -1,4 +1,3 @@
-// needed as of 7.x series, see CHANGELOG of the api repo.
 import '@polkadot/api-augment';
 import '@polkadot/types-augment';
 import { toBalance, toUnit } from '../utils/unitConversions';
@@ -30,8 +29,11 @@ async function main() {
     const AMOUNT = toBalance(0.01, api);
 
     /**
+     * TODO:
      * 2. calculate transaction fees
      **/
+
+    //API to calculate transaction fees for a transfer amount
     const info = await api.tx.balances
         .transfer(RECEIVER_ACCOUNT, AMOUNT)
         .paymentInfo(account);

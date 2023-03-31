@@ -1,4 +1,3 @@
-// needed as of 7.x series, see CHANGELOG of the api repo.
 import '@polkadot/api-augment';
 import '@polkadot/types-augment';
 import { toBalance, toUnit, toUnitAmount} from '../utils/unitConversions';
@@ -28,11 +27,12 @@ async function main() {
     const wsProvider = new WsProvider(process.env.WS_URL);
     // Create a new instance of the api
     const api = await ApiPromise.create({ provider: wsProvider, noInitWarn: true });
-    
+
     console.log(`\n######################################## Transaction initiating ############################################`);
 
     /**
      * 1. Retrieve the initial balance of the account.
+     * 
      */
     const keyring = new Keyring({type: 'sr25519'});
     const account = keyring.addFromUri(SENDER_MNEMONIC);
@@ -42,8 +42,9 @@ async function main() {
     const requestedAmount = 0.01;
     console.log(`\n Requested amount: ${requestedAmount}`);
     
-    /**
-     * 2. calculate transaction fees
+    /** TODO:
+     * 2. calculate transaction fees and the total amount to be transferred
+     * 
      **/
     const convertedAmount = toBalance(requestedAmount,api);
     const info = await api.tx.balances
@@ -63,6 +64,8 @@ async function main() {
      * 3. Transfer tokens from the sender account to the receiver account
      *      and print the transaction hash
      **/ 
+
+    //API call to transfer tokens from the sender account to the receiver account
     const txHash = await api.tx.balances
         .transfer(RECEIVER_ACCOUNT, convertedAmount)
         .signAndSend(account);

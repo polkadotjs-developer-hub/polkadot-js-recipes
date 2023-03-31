@@ -1,4 +1,3 @@
-// needed as of 7.x series, see CHANGELOG of the api repo.
 import '@polkadot/api-augment';
 import '@polkadot/types-augment';
 import { toBalance, toUnit, toUnitAmount } from '../utils/unitConversions';
@@ -32,7 +31,9 @@ async function main() {
 
   /**
    * 1. Retrieve the initial balance of the account.
+   * 
    */
+
   const keyring = new Keyring({ type: 'sr25519' });
   const senderAccount = keyring.addFromUri(SENDER_MNEMONIC);
   let { data } = await api.query.system.account(SENDER_ACCOUNT);
@@ -41,10 +42,14 @@ async function main() {
   const requestedAmount = 100;
   console.log(`\n Requested amount: ${requestedAmount}`);
 
-  /**
-   * 2. calculate transaction fees
-   **/
+  /** TODO:
+   *  2. calculate transaction fees and the total amount to be transferred
+   * 
+   **/  
+
   const convertedAmount = toBalance(requestedAmount, api);
+
+  //API to calculate transaction fees
   const info = await api.tx.balances
     .transfer(RECEIVER_ACCOUNT, convertedAmount)
     .paymentInfo(senderAccount);
@@ -57,15 +62,19 @@ async function main() {
   let totalAmount = requestedAmount + transactionFees;
   console.log(`\n Total amount = requested amount(${requestedAmount}) + transaction fees(${transactionFees}) : ${totalAmount}`);
 
+
   /**
    * 3. Transfer tokens from the sender account to the receiver account
    *      and print the transaction hash
+   * 
    **/
+
+  //API to transfer tokens from the sender account to the receiver account
   await api.tx.balances
     .transfer(RECEIVER_ACCOUNT, convertedAmount)
-    .signAndSend(senderAccount, ({ status, events, dispatchError, txHash }) => {
-      // status would still be set, but in the case of error we can shortcut
-      // to just check it (so an error would indicate InBlock or Finalized)
+    .signAndSend(senderAccount, ({dispatchError, txHash }) => {
+
+      // in case of error, the dispatchError is set and we can display the error details
       if (dispatchError) {
         if (dispatchError.isModule) {
           // for module errors, we have the section indexed, lookup

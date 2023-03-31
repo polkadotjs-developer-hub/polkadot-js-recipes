@@ -1,4 +1,3 @@
-// needed as of 7.x series, see CHANGELOG of the api repo.
 import '@polkadot/api-augment';
 import '@polkadot/types-augment';
 import { toUnit } from '../utils/unitConversions';
@@ -8,7 +7,7 @@ import * as dotenv from 'dotenv'
 dotenv.config()
 
 /**
- * TODO: add your account address here
+ * ###################TODO: add your account address here  ######################
  */
 const ACCOUNT = '5D1tdPadpW4U22i1EmbyFSeTJQpYBL8VVTbU18Q3AL8jw8QE';
 
@@ -32,6 +31,8 @@ async function main() {
 	// Convert the balance to a human readable format
 	const transferAmount = toUnit(data.free, api);
 	console.log(`\n Westend balance --------  ${transferAmount}`);
+
+	console.log(`\n Westend balance --------  ${data.free.toHuman()}`);
 }
 
 

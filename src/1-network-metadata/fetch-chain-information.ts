@@ -14,6 +14,7 @@ async function main () {
   
   /**
    *  1. fetch the chain information
+   * 
    */
   const chainInfo = await api.registry.getChainProperties()
   console.log(`chainInfo ${chainInfo}`);

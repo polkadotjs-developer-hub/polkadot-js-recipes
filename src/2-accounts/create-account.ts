@@ -14,8 +14,8 @@ async function main () {
   const keyring = new Keyring({ type: 'sr25519' });;
 
   /**
-   * 1. Generate a mnemonic 
-   * The mnemonic is a string of 12 words that can be used to generate a private key.
+   * 1. Generate a mnemonic. The mnemonic is a string of 12 words that can be used to generate a private key.
+   * 
    */
 
   // Create mnemonic string for your own account using BIP39
@@ -24,9 +24,11 @@ async function main () {
 
 
   /**
-   * 2. Create an account  
-   * Add account with keypair from the generated mnemonic
+   * 2. Create an account and add account with keypair from the generated mnemonic
+   * 
    */
+  
+  // API to create an account from a mnemonic
   const newAccount = await keyring.addFromUri(`${MNEMONIC}`);
 
   // Display the metadata name & Substrate generic ss58Format encoded address
