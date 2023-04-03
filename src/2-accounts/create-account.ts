@@ -20,14 +20,15 @@ async function main () {
 
   // Create mnemonic string for your own account using BIP39
   const MNEMONIC = mnemonicGenerate()
-  console.log(`\n Mnenomic generated: ${MNEMONIC}`)
+  console.log('\n\x1b[36m%s\x1b[0m', ` Save the Mnenomic generated : `);  //cyan
+  console.log(` ${MNEMONIC}`)
 
 
   /**
    * 2. Create an account and add account with keypair from the generated mnemonic
    * 
    */
-  
+
   // API to create an account from a mnemonic
   const newAccount = await keyring.addFromUri(`${MNEMONIC}`);
 

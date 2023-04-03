@@ -5,7 +5,7 @@ import * as dotenv from 'dotenv'
 dotenv.config()
 
 /**
- *  ############################## TODO: add your block hash here ########################################
+ *  ############################## TODO: add your block hash below ########################################
  */
 const blockHash = '0x43376170b4c1c446e0506c5d39b70a88d68795a0c21002980d70f29866888671';
 

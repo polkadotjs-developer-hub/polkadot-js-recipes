@@ -7,17 +7,17 @@ import * as dotenv from 'dotenv'
 dotenv.config()
 
 /**
- * TODO: add your sender account here
+ * TODO: add your sender account below
  */
 const SENDER_ACCOUNT = '5GEwX4bq8uzehVgdTKfmPrXPU61XoUdqfCZmWxs1tajKz9K8';
 
 /**
- * TODO: add your sender mneomonic here
+ * TODO: add your sender mneomonic below
  */
 const SENDER_MNEMONIC = 'cause trip unique fossil hello supreme release know design marriage never filter';
 
 /**
- * TODO: add your receiver account here
+ * TODO: add your receiver account below
  */
 const RECEIVER_ACCOUNT = '5GW83GQ53B3UGAMCyoFeFTJV8GKwU6bDjF3iRksdxtSt8QNU';
 
