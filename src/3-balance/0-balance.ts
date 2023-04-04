@@ -1,6 +1,6 @@
 import '@polkadot/api-augment';
 import '@polkadot/types-augment';
-import { toUnit } from '../utils/unitConversions';
+import { toDecimal } from '../utils/unitConversions';
 
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import * as dotenv from 'dotenv'
@@ -21,20 +21,21 @@ async function main() {
 	 * 1. Retrieve the initial balance of the account.
 	 */
 	let { data } = await api.query.system.account(ACCOUNT);
-	console.log(`\n Account ${ACCOUNT} has a balance of ${data.free.toHuman()}`);
+	console.log(`\n Account ${ACCOUNT} has a balance of : `)
+	
+	console.log(`\n Planck amount --- ${data.free.toHuman()}`);
 
 
 	/**
-	 * 2. Convert the balance to a human readable format
+	 * 2. Convert the planck amount to decimal amount
 	 */
 
-	// Convert the balance to a human readable format
-	const transferAmount = toUnit(data.free, api);
-	console.log(`\n Westend balance --------  ${transferAmount}`);
+	const transferAmount = toDecimal(data.free, api);
+	console.log(`\n Westend amount  --- ${transferAmount}`);
 
 	//disconnect from the chain
 	api.disconnect();
-	
+
 }
 
 

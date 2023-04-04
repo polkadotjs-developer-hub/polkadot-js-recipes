@@ -1,6 +1,6 @@
 import '@polkadot/api-augment';
 import '@polkadot/types-augment';
-import { toBalance, toUnit, toUnitAmount } from '../utils/unitConversions';
+import { toPlanckUnit, toDecimal, toDecimalAmount } from '../utils/unitConversions';
 import { Keyring } from '@polkadot/api';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import * as dotenv from 'dotenv'
@@ -46,13 +46,13 @@ async function main() {
      * 2. calculate transaction fees and the total amount to be transferred
      * 
      **/
-    const convertedAmount = toBalance(requestedAmount, api);
+    const convertedAmount = toPlanckUnit(requestedAmount, api);
     const info = await api.tx.balances
         .transfer(RECEIVER_ACCOUNT, convertedAmount)
         .paymentInfo(account);
 
     // Convert the transaction fees to a human readable format
-    let transactionFees = toUnitAmount(info.partialFee, api);
+    let transactionFees = toDecimalAmount(info.partialFee, api);
     console.log(`\n Transaction fees: ${transactionFees}`);
 
     // Calculate the total amount to be transferred
@@ -81,10 +81,10 @@ async function main() {
 
     // balance of the sender account after the transfer
     let { data: senderBalance } = await api.query.system.account(SENDER_ACCOUNT);
-    console.log(`\n Sender Account ${SENDER_ACCOUNT} has a balance of ` + toUnit(senderBalance.free, api) + ` after the transfer`);
+    console.log(`\n Sender Account ${SENDER_ACCOUNT} has a balance of ` + toDecimal(senderBalance.free, api) + ` after the transfer`);
     // balance of the receiver account after the transfer
     let { data: receiverBalance } = await api.query.system.account(RECEIVER_ACCOUNT);
-    console.log(`\n Receiver Account ${RECEIVER_ACCOUNT} has a balance of ` + toUnit(receiverBalance.free, api) + ` after the transfer`);
+    console.log(`\n Receiver Account ${RECEIVER_ACCOUNT} has a balance of ` + toDecimal(receiverBalance.free, api) + ` after the transfer`);
 
     //disconnect from the chain
     api.disconnect();

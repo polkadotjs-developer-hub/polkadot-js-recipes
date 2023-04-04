@@ -3,7 +3,7 @@ import '@polkadot/types-augment';
 
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { Balance } from '@polkadot/types/interfaces/runtime';
-import { toUnit } from '../utils/unitConversions';
+import { toDecimal } from '../utils/unitConversions';
 import * as dotenv from 'dotenv'
 dotenv.config()
 
@@ -22,8 +22,8 @@ async function main() {
 	//API to retrieve the existential deposit
 	const ED: Balance = api.consts.balances.existentialDeposit;
 
-	// Convert the balance to a human readable format
-	const transferAmount = toUnit(ED, api);
+	// Convert the planck amount to decimal amount
+	const transferAmount = toDecimal(ED, api);
 	console.log(`\n Existential deposit  ----- ${transferAmount}`);
 
 	//disconnect from the chain

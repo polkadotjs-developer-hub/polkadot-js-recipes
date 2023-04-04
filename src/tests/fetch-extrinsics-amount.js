@@ -51,14 +51,14 @@ signedBlock.block.extrinsics.forEach(({ method: { method, section } }, index) =>
             const amount = event.data.amount;
             console.log(`free:::::::::: ${JSON.stringify(free)}`);
 
-            console.log(`amount:::::::::: ${JSON.stringify(toUnit(amount,chainDecimals))}`);
+            console.log(`amount:::::::::: ${JSON.stringify(toDecimal(amount,chainDecimals))}`);
           }
         }
 
     });
 });
 }
-function toUnit(balance, decimals) {
+function toDecimal(balance, decimals) {
     const base = new BN(10).pow(new BN(decimals));
     const dm = new BN(balance).divmod(base);
     return parseFloat(dm.div.toString() + "." + dm.mod.toString())

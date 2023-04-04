@@ -1,6 +1,6 @@
 import '@polkadot/api-augment';
 import '@polkadot/types-augment';
-import { toBalance, toUnit, toUnitAmount } from '../utils/unitConversions';
+import { toPlanckUnit, toDecimal, toDecimalAmount } from '../utils/unitConversions';
 import { Keyring } from '@polkadot/api';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import * as dotenv from 'dotenv'
@@ -47,7 +47,7 @@ async function main() {
    * 
    **/  
 
-  const convertedAmount = toBalance(requestedAmount, api);
+  const convertedAmount = toPlanckUnit(requestedAmount, api);
 
   //API to calculate transaction fees
   const info = await api.tx.balances
@@ -55,7 +55,7 @@ async function main() {
     .paymentInfo(senderAccount);
 
   // Convert the transaction fees to a human readable format
-  let transactionFees = toUnitAmount(info.partialFee, api);
+  let transactionFees = toDecimalAmount(info.partialFee, api);
   console.log(`\n Transaction fees: ${transactionFees}`);
 
   // Calculate the total amount to be transferred

@@ -1,6 +1,6 @@
 import '@polkadot/api-augment';
 import '@polkadot/types-augment';
-import { toBalance, toUnit } from '../utils/unitConversions';
+import { toPlanckUnit, toDecimal } from '../utils/unitConversions';
 import { Keyring } from '@polkadot/api';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import * as dotenv from 'dotenv'
@@ -26,7 +26,7 @@ async function main() {
     let { data } = await api.query.system.account(SENDER_ACCOUNT);
     console.log(`\n Account ${SENDER_ACCOUNT} has a balance of ${data.free}`);
 
-    const AMOUNT = toBalance(0.01, api);
+    const AMOUNT = toPlanckUnit(0.01, api);
 
     /**
      * TODO:
@@ -39,7 +39,7 @@ async function main() {
         .paymentInfo(account);
 
     // Convert the transaction fees to a human readable format
-    let transactionFees = toUnit(info.partialFee, api);
+    let transactionFees = toDecimal(info.partialFee, api);
     console.log(`\n Transaction fees: ${transactionFees}`);
 
 
