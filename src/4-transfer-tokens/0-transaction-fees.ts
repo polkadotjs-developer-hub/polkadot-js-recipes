@@ -41,6 +41,10 @@ async function main() {
     // Convert the transaction fees to a human readable format
     let transactionFees = toUnit(info.partialFee, api);
     console.log(`\n Transaction fees: ${transactionFees}`);
+
+
+    //disconnect from the chain
+    api.disconnect();
 }
 
 

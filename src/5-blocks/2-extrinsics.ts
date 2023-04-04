@@ -47,6 +47,10 @@ async function main() {
     console.log(`  Tip: ${extrinsic.tip.toString()}`);
   });
 
+  
+  //disconnect from the chain
+  api.disconnect();
+
 }
 
 main().catch(console.error);

@@ -1,6 +1,6 @@
 import '@polkadot/api-augment';
 import '@polkadot/types-augment';
-import { toBalance, toUnit, toUnitAmount} from '../utils/unitConversions';
+import { toBalance, toUnit, toUnitAmount } from '../utils/unitConversions';
 import { Keyring } from '@polkadot/api';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import * as dotenv from 'dotenv'
@@ -34,19 +34,19 @@ async function main() {
      * 1. Retrieve the initial balance of the account.
      * 
      */
-    const keyring = new Keyring({type: 'sr25519'});
+    const keyring = new Keyring({ type: 'sr25519' });
     const account = keyring.addFromUri(SENDER_MNEMONIC);
     let { data } = await api.query.system.account(SENDER_ACCOUNT);
     console.log(`\n Account ${SENDER_ACCOUNT} has a balance of ${data.free}`);
 
     const requestedAmount = 0.01;
     console.log(`\n Requested amount: ${requestedAmount}`);
-    
+
     /** TODO:
      * 2. calculate transaction fees and the total amount to be transferred
      * 
      **/
-    const convertedAmount = toBalance(requestedAmount,api);
+    const convertedAmount = toBalance(requestedAmount, api);
     const info = await api.tx.balances
         .transfer(RECEIVER_ACCOUNT, convertedAmount)
         .paymentInfo(account);
@@ -58,12 +58,12 @@ async function main() {
     // Calculate the total amount to be transferred
     let totalAmount = requestedAmount + transactionFees;
     console.log(`\n Total amount = requested amount(${requestedAmount}) + transaction fees(${transactionFees}) : ${totalAmount}`);
-   
+
 
     /**
      * 3. Transfer tokens from the sender account to the receiver account
      *      and print the transaction hash
-     **/ 
+     **/
 
     //API call to transfer tokens from the sender account to the receiver account
     const txHash = await api.tx.balances
@@ -85,6 +85,9 @@ async function main() {
     // balance of the receiver account after the transfer
     let { data: receiverBalance } = await api.query.system.account(RECEIVER_ACCOUNT);
     console.log(`\n Receiver Account ${RECEIVER_ACCOUNT} has a balance of ` + toUnit(receiverBalance.free, api) + ` after the transfer`);
+
+    //disconnect from the chain
+    api.disconnect();
 }
 
 

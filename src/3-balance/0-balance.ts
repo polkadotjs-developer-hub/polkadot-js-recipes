@@ -7,7 +7,7 @@ import * as dotenv from 'dotenv'
 dotenv.config()
 
 /**
- * ###################TODO: add your account address here  ######################
+ * ###################TODO: add your account address below  ######################
  */
 const ACCOUNT = '5D1tdPadpW4U22i1EmbyFSeTJQpYBL8VVTbU18Q3AL8jw8QE';
 
@@ -21,7 +21,7 @@ async function main() {
 	 * 1. Retrieve the initial balance of the account.
 	 */
 	let { data } = await api.query.system.account(ACCOUNT);
-	console.log(`\n Account ${ACCOUNT} has a balance of ${data.free}`);
+	console.log(`\n Account ${ACCOUNT} has a balance of ${data.free.toHuman()}`);
 
 
 	/**
@@ -32,7 +32,9 @@ async function main() {
 	const transferAmount = toUnit(data.free, api);
 	console.log(`\n Westend balance --------  ${transferAmount}`);
 
-	console.log(`\n Westend balance --------  ${data.free.toHuman()}`);
+	//disconnect from the chain
+	api.disconnect();
+	
 }
 
 

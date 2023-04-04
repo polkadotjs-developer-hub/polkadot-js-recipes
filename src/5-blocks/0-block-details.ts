@@ -39,6 +39,8 @@ async function main() {
   console.log(`Digest logs: ${signedBlock.block.header.digest.logs}`);
   console.log(`Extrinsics count: ${signedBlock.block.extrinsics.length}`);
 
+  //disconnect from the chain
+  api.disconnect();
 }
 
 main().catch(console.error);

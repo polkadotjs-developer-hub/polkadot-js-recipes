@@ -48,6 +48,10 @@ async function main() {
       });
 
   });
+
+  
+  //disconnect from the chain
+  api.disconnect();
 }
 
 main().catch(console.error);

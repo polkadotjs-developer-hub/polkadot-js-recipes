@@ -1,13 +1,13 @@
 import { ApiPromise, WsProvider } from '@polkadot/api';
 
-async function main () {
+async function main() {
 
   // Create connection to blockchain network 
   const wsProvider = new WsProvider(`wss://rpc.ibp.network/westend`);
 
   // Create a new instance of APIPromise with the websocket provider
-  const api = await ApiPromise.create({ provider: wsProvider , noInitWarn: true});
-  
+  const api = await ApiPromise.create({ provider: wsProvider, noInitWarn: true });
+
   /**
    *  1. fetch the chain information
    */
@@ -17,6 +17,9 @@ async function main () {
 
   // output for above code for Westend network
   // {"ss58Format":42,"tokenDecimals":[12],"tokenSymbol":["WND"]}
+
+  //disconnect from the chain
+  api.disconnect();
 }
 
 

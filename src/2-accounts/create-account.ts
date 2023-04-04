@@ -3,7 +3,7 @@ import { mnemonicGenerate } from '@polkadot/util-crypto';
 import * as dotenv from 'dotenv'
 dotenv.config()
 
-async function main () {
+async function main() {
 
   const wsProvider = new WsProvider(process.env.WS_URL);
 
@@ -20,7 +20,7 @@ async function main () {
 
   // Create mnemonic string for your own account using BIP39
   const MNEMONIC = mnemonicGenerate()
-  console.log('\n\x1b[36m%s\x1b[0m', ` Save the Mnenomic generated : `);  //cyan
+  console.log('\n\x1b[36m%s\x1b[0m', ` Save the Mnenomic : `);  //cyan
   console.log(` ${MNEMONIC}`)
 
 
@@ -33,8 +33,11 @@ async function main () {
   const newAccount = await keyring.addFromUri(`${MNEMONIC}`);
 
   // Display the metadata name & Substrate generic ss58Format encoded address
-  console.log(`\n Address:  ${newAccount.address}`)
-  console.log(`\n Public Key:  ${newAccount.publicKey}`)
+  console.log('\n\x1b[36m%s\x1b[0m', ` Save the Address : `);  //cyan
+  console.log(` ${newAccount.address}`)
+
+  //disconnect from the chain
+  api.disconnect();
 }
 
 main().catch((err) => {

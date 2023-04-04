@@ -26,6 +26,8 @@ async function main() {
 	const transferAmount = toUnit(ED, api);
 	console.log(`\n Existential deposit  ----- ${transferAmount}`);
 
+	//disconnect from the chain
+	api.disconnect();
 }
 
 
