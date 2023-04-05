@@ -12,7 +12,7 @@ dotenv.config()
 const SENDER_ACCOUNT = '5GEwX4bq8uzehVgdTKfmPrXPU61XoUdqfCZmWxs1tajKz9K8';
 
 /**
- * TODO: add your sender mneomonic below
+ * TODO: add your sender mnemonic below
  */
 const SENDER_MNEMONIC = 'cause trip unique fossil hello supreme release know design marriage never filter';
 
