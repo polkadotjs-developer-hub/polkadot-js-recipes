@@ -45,6 +45,7 @@ async function main() {
   const requestedAmount = 0.001;
   console.log(`\n Requested amount: ${requestedAmount}`);
 
+
   /**
    * 2. calculate transaction fees for a particular transfer amount and convert it to decimal format
    * 
@@ -66,8 +67,7 @@ async function main() {
 
 
   /**
-   * 3. Transfer tokens from the sender account to the receiver account
-   *      and print the transaction hash
+   * 3. Transfer tokens from the sender account to the receiver account and print the transaction hash
    * 
    **/
 
@@ -87,7 +87,6 @@ async function main() {
         console.log(`\n Transaction finalized at blockHash : ${status.asFinalized}`);
         console.log(`\n Check block status for finalized transaction on the Subscan explorer : https://westend.subscan.io/block/${status.asFinalized}`);
         console.log(`\n\n######################################## Transaction successful ########################################`);
-
 
       }
     });

@@ -39,8 +39,7 @@ async function main() {
     let { data } = await api.query.system.account(SENDER_ACCOUNT);
     console.log(`\n Account ${SENDER_ACCOUNT} has a balance of ${data.free}`);
 
-
-
+    
     /**
      * 2. calculate transaction fees for a particular transfer amount and convert it to decimal format
      * 

@@ -37,14 +37,13 @@ async function main() {
 
 
     /**
-     * 
      * 2. calculate transaction fees for a particular transfer amount and convert it to decimal format
      * 
      **/
 
     // convert the amount to planck unit
     const AMOUNT = toPlanckUnit(0.01, api);
-    
+
     //API to calculate transaction fees for a particular transfer amount
     const info = await api.tx.balances
         .transfer(RECEIVER_ACCOUNT, AMOUNT)
