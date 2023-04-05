@@ -8,8 +8,8 @@ import * as dotenv from 'dotenv'
 dotenv.config()
 
 async function main() {
-	const wsProvider = new WsProvider(process.env.WS_URL);
 
+	const wsProvider = new WsProvider(process.env.WS_URL);
 	// Create a new instance of the api
 	const api = await ApiPromise.create({ provider: wsProvider, noInitWarn: true });
 
@@ -24,10 +24,10 @@ async function main() {
 
 	// Convert the planck amount to decimal amount
 	const transferAmount = toDecimal(ED, api);
-	console.log(`\n Existential deposit  ----- ${transferAmount}`);
+	console.log(`\n Existential deposit  --- ${transferAmount}`);
 
 	//disconnect from the chain
-	api.disconnect();
+	// api.disconnect();
 }
 
 

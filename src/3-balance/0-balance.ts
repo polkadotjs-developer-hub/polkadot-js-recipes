@@ -31,7 +31,7 @@ async function main() {
 	 */
 
 	const transferAmount = toDecimal(data.free, api);
-	console.log(`\n Westend amount  --- ${transferAmount}`);
+	console.log(`\n Westend amount --- ${transferAmount}`);
 
 	//disconnect from the chain
 	api.disconnect();
