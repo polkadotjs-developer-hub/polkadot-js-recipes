@@ -41,7 +41,7 @@ async function main() {
 
 
     /**
-     * 2. calculate transaction fees for a particular transfer amount and convert it to decimal format
+     * 2. calculate transaction fees for a particular transaction amount while transferring tokens from sender account to receiver account and convert it to decimal format
      * 
      **/
     const requestedAmount = 0.01;

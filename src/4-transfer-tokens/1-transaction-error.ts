@@ -43,13 +43,13 @@ async function main() {
   console.log(`\n Requested amount: ${requestedAmount}`);
 
   /**
-   * 2. calculate transaction fees for a particular transfer amount and convert it to decimal format
+   * 2. calculate transaction fees for a particular transaction amount while transferring tokens from sender account to receiver account and convert it to decimal format
    * 
    **/
 
   const convertedAmount = toPlanckUnit(requestedAmount, api);
 
-  //API to calculate transaction fees
+  //API to calculate transaction fees from sender account to receiver account
   const info = await api.tx.balances
     .transfer(RECEIVER_ACCOUNT, convertedAmount)
     .paymentInfo(senderAccount);
