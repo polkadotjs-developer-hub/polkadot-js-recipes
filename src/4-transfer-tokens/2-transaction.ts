@@ -42,8 +42,8 @@ async function main() {
     const requestedAmount = 0.01;
     console.log(`\n Requested amount: ${requestedAmount}`);
 
-    /** TODO:
-     * 2. calculate transaction fees and the total amount to be transferred
+    /**
+     * 2. calculate transaction fees for a particular transfer amount and convert it to a decimal format
      * 
      **/
     const convertedAmount = toPlanckUnit(requestedAmount, api);
@@ -61,8 +61,8 @@ async function main() {
 
 
     /**
-     * 3. Transfer tokens from the sender account to the receiver account
-     *      and print the transaction hash
+     * 3. Transfer tokens from the sender account to the receiver account and print the transaction hash
+     * 
      **/
 
     //API call to transfer tokens from the sender account to the receiver account

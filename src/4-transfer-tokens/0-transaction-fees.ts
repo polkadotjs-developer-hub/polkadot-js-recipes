@@ -7,11 +7,20 @@ import * as dotenv from 'dotenv'
 dotenv.config()
 
 /**
-* TODO: add your account address here
-*/
+ * TODO: add your sender account below
+ */
 const SENDER_ACCOUNT = '5GEwX4bq8uzehVgdTKfmPrXPU61XoUdqfCZmWxs1tajKz9K8';
+
+/**
+ * TODO: add your sender mneomonic below
+ */
 const SENDER_MNEMONIC = 'cause trip unique fossil hello supreme release know design marriage never filter';
+
+/**
+ * TODO: add your receiver account below
+ */
 const RECEIVER_ACCOUNT = '5GW83GQ53B3UGAMCyoFeFTJV8GKwU6bDjF3iRksdxtSt8QNU';
+
 async function main() {
 
     const wsProvider = new WsProvider(process.env.WS_URL);
@@ -26,19 +35,21 @@ async function main() {
     let { data } = await api.query.system.account(SENDER_ACCOUNT);
     console.log(`\n Account ${SENDER_ACCOUNT} has a balance of ${data.free}`);
 
+    // convert the amount to planck unit
     const AMOUNT = toPlanckUnit(0.01, api);
 
     /**
-     * TODO:
-     * 2. calculate transaction fees
+     * 
+     * 2. calculate transaction fees for a particular transfer amount and convert it to a decimal format
+     * 
      **/
 
-    //API to calculate transaction fees for a transfer amount
+    //API to calculate transaction fees for a particular transfer amount
     const info = await api.tx.balances
         .transfer(RECEIVER_ACCOUNT, AMOUNT)
         .paymentInfo(account);
 
-    // Convert the transaction fees to a human readable format
+    // Convert the transaction fees to decimal format
     let transactionFees = toDecimal(info.partialFee, api);
     console.log(`\n Transaction fees: ${transactionFees}`);
 
