@@ -28,22 +28,23 @@ async function main() {
     const api = await ApiPromise.create({ provider: wsProvider, noInitWarn: true });
 
     /**
-    * 1. Retrieve the initial balance of the account.
+    * 1. Retrieve the initial balance of the account and convert it to decimal format
     */
     const keyring = new Keyring({ type: 'sr25519' });
     const account = keyring.addFromUri(SENDER_MNEMONIC);
     let { data } = await api.query.system.account(SENDER_ACCOUNT);
-    console.log(`\n Account ${SENDER_ACCOUNT} has a balance of ${data.free}`);
+    console.log(`\n Account ${SENDER_ACCOUNT} has a balance of ${toDecimal(data.free, api)}`);
 
-    // convert the amount to planck unit
-    const AMOUNT = toPlanckUnit(0.01, api);
 
     /**
      * 
-     * 2. calculate transaction fees for a particular transfer amount and convert it to a decimal format
+     * 2. calculate transaction fees for a particular transfer amount and convert it to decimal format
      * 
      **/
 
+    // convert the amount to planck unit
+    const AMOUNT = toPlanckUnit(0.01, api);
+    
     //API to calculate transaction fees for a particular transfer amount
     const info = await api.tx.balances
         .transfer(RECEIVER_ACCOUNT, AMOUNT)

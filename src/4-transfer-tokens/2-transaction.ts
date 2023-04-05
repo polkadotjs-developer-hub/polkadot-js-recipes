@@ -39,13 +39,14 @@ async function main() {
     let { data } = await api.query.system.account(SENDER_ACCOUNT);
     console.log(`\n Account ${SENDER_ACCOUNT} has a balance of ${data.free}`);
 
-    const requestedAmount = 0.01;
-    console.log(`\n Requested amount: ${requestedAmount}`);
+
 
     /**
-     * 2. calculate transaction fees for a particular transfer amount and convert it to a decimal format
+     * 2. calculate transaction fees for a particular transfer amount and convert it to decimal format
      * 
      **/
+    const requestedAmount = 0.01;
+    console.log(`\n Requested amount: ${requestedAmount}`);
     const convertedAmount = toPlanckUnit(requestedAmount, api);
     const info = await api.tx.balances
         .transfer(RECEIVER_ACCOUNT, convertedAmount)

@@ -46,7 +46,7 @@ async function main() {
   console.log(`\n Requested amount: ${requestedAmount}`);
 
   /**
-   * 2. calculate transaction fees for a particular transfer amount and convert it to a decimal format
+   * 2. calculate transaction fees for a particular transfer amount and convert it to decimal format
    * 
    **/
   const convertedAmount = toPlanckUnit(requestedAmount, api);
