@@ -19,7 +19,9 @@ function toDecimalAmount(balance: string | number | number[] | BN | Uint8Array |
 // convert unit to balance
 function toPlanckUnit(amount:number , api: ApiPromise) {
     const decimals = api.registry.chainDecimals[0];
-    return amount * Math.pow(10, decimals);
+    const planckPerWestend = new BN(decimals); // 1 Westend = 1,000,000,000,000 Planck
+    const planckAmount = new BN(amount).mul(planckPerWestend);
+    return planckAmount;
 }
 
 export  { toDecimal, toPlanckUnit, toDecimalAmount };

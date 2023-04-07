@@ -21,6 +21,9 @@ const SENDER_MNEMONIC = 'cause trip unique fossil hello supreme release know des
  */
 const RECEIVER_ACCOUNT = '5GW83GQ53B3UGAMCyoFeFTJV8GKwU6bDjF3iRksdxtSt8QNU';
 
+// Amount to be transferred from sender account to receiver account
+const SENDER_AMOUNT = 0.001;
+
 async function main() {
 
     const wsProvider = new WsProvider(process.env.WS_URL);
@@ -41,8 +44,8 @@ async function main() {
      * 
      **/
 
-    // convert the amount to planck unit
-    const AMOUNT = toPlanckUnit(0.01, api);
+    // convert the sender amount to planck unit
+    const AMOUNT = toPlanckUnit(SENDER_AMOUNT, api);
 
     //API to calculate transaction fees from sender account to receiver account
     const info = await api.tx.balances

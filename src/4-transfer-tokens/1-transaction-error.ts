@@ -19,8 +19,10 @@ const SENDER_MNEMONIC = 'cause trip unique fossil hello supreme release know des
 /**
  * TODO: add your receiver account address below
  */
-const RECEIVER_ACCOUNT = '5GW83GQ53B3UGAMCyoFeFTJV8GKwU6bDjF3iRksdxtSt8QNU';
+const RECEIVER_ACCOUNT = '11';
 
+// Amount to be transferred from sender account to receiver account
+const SENDER_AMOUNT = 10000;
 
 async function main() {
 
@@ -37,65 +39,33 @@ async function main() {
   const keyring = new Keyring({ type: 'sr25519' });
   const senderAccount = keyring.addFromUri(SENDER_MNEMONIC);
   let { data } = await api.query.system.account(SENDER_ACCOUNT);
-  console.log(`\n Account ${SENDER_ACCOUNT} has a balance of ${data.free}`);
-
-  const requestedAmount = 100;
-  console.log(`\n Requested amount: ${requestedAmount}`);
+  console.log(`\n Account ${SENDER_ACCOUNT} has a balance of ${toDecimal(data.free, api)}`);
 
   /**
    * 2. calculate transaction fees for a particular transaction amount while transferring tokens from sender account to receiver account and convert it to decimal format
    * 
    **/
 
-  const convertedAmount = toPlanckUnit(requestedAmount, api);
+  console.log(`\n Requested amount: ${SENDER_AMOUNT}`);
 
-  //API to calculate transaction fees from sender account to receiver account
-  const info = await api.tx.balances
-    .transfer(RECEIVER_ACCOUNT, convertedAmount)
-    .paymentInfo(senderAccount);
+  // Convert the transaction amount to planck unit
+  const convertedAmount = toPlanckUnit(SENDER_AMOUNT, api);
+  try {
+    //API to calculate transaction fees from sender account to receiver account
+    const info = await api.tx.balances
+      .transfer(RECEIVER_ACCOUNT, convertedAmount)
+      .paymentInfo(senderAccount);
 
-  // Convert the transaction fees to a human readable format
-  let transactionFees = toDecimalAmount(info.partialFee, api);
-  console.log(`\n Transaction fees: ${transactionFees}`);
-
-  // Calculate the total amount to be transferred
-  let totalAmount = requestedAmount + transactionFees;
-  console.log(`\n Total amount = requested amount(${requestedAmount}) + transaction fees(${transactionFees}) : ${totalAmount}`);
-
-
-  /**
-   * 3. Handle transaction errors while transferring tokens from the sender account to the receiver account
-   * 
-   **/
-
-  //API to transfer tokens from the sender account to the receiver account
-  await api.tx.balances
-    .transfer(RECEIVER_ACCOUNT, convertedAmount)
-    .signAndSend(senderAccount, ({ dispatchError, txHash }) => {
-
-      // in case of error, the dispatchError is set and we can display the error details
-      if (dispatchError) {
-        if (dispatchError.isModule) {
-          // for module errors, we have the section indexed, lookup
-          const decoded = api.registry.findMetaError(dispatchError.asModule);
-          const { docs, name, section } = decoded;
-          console.log(`\n######################################## Transaction failed ################################################`);
-          console.log(`\n Transaction failed with error: ${section}.${name} : ${docs.join(' ')}`);
-          console.log(`\n Check failed transaction status on the Subscan explorer : https://westend.subscan.io/extrinsic/${txHash}`);
-
-        } else {
-          // Other, CannotLookup, BadOrigin, no extra info
-          console.log(dispatchError.toString());
-        }
-      }
-    });
-
-
+  } catch (error) {
+    console.log(`\n######################################## Transaction failed ################################################`);
+    console.log(`\n Transaction failed with ${error}`);
+  }
   //disconnect from the chain
   api.disconnect();
 }
 
 
 
-main().catch(console.error);
+main().catch(console.error).finally(() => process.exit());
+
 

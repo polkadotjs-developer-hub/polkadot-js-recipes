@@ -21,6 +21,8 @@ const SENDER_MNEMONIC = 'cause trip unique fossil hello supreme release know des
  */
 const RECEIVER_ACCOUNT = '5GW83GQ53B3UGAMCyoFeFTJV8GKwU6bDjF3iRksdxtSt8QNU';
 
+// Amount to be transferred from sender account to receiver account
+const SENDER_AMOUNT = 0.001;
 
 async function main() {
 
@@ -42,15 +44,14 @@ async function main() {
   let { data } = await api.query.system.account(SENDER_ACCOUNT);
   console.log(`\n Account ${SENDER_ACCOUNT} has a balance of ` + toDecimal(data.free, api));
 
-  const requestedAmount = 0.001;
-  console.log(`\n Requested amount: ${requestedAmount}`);
 
 
   /**
    * 2. calculate transaction fees for a particular transaction amount while transferring tokens from sender account to receiver account and convert it to decimal format
    * 
    **/
-  const convertedAmount = toPlanckUnit(requestedAmount, api);
+  console.log(`\n Requested amount: ${SENDER_AMOUNT}`);
+  const convertedAmount = toPlanckUnit(SENDER_AMOUNT, api);
 
   //API to calculate transaction fees
   const info = await api.tx.balances
@@ -62,8 +63,8 @@ async function main() {
   console.log(`\n Transaction fees: ${transactionFees}`);
 
   // Calculate the total amount to be transferred
-  let totalAmount = requestedAmount + transactionFees;
-  console.log(`\n Total amount = requested amount(${requestedAmount}) + transaction fees(${transactionFees}) : ${totalAmount}`);
+  let totalAmount = SENDER_AMOUNT + transactionFees;
+  console.log(`\n Total amount = requested amount(${SENDER_AMOUNT}) + transaction fees(${transactionFees}) : ${totalAmount}`);
 
 
   /**
