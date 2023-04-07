@@ -46,7 +46,7 @@ async function main() {
      * 2. calculate transaction fees for a particular transaction amount while transferring tokens from sender account to receiver account and convert it to decimal format
      * 
      **/
-    console.log(`\n Requested amount: ${SENDER_AMOUNT}`);
+    console.log(`\n Requested amount: ${SENDER_AMOUNT} WND`);
     const convertedAmount = toPlanckUnit(SENDER_AMOUNT, api);
     const info = await api.tx.balances
         .transfer(RECEIVER_ACCOUNT, convertedAmount)

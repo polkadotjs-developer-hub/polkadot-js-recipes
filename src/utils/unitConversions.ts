@@ -24,4 +24,12 @@ function toPlanckUnit(amount:number , api: ApiPromise) {
     return planckAmount;
 }
 
-export  { toDecimal, toPlanckUnit, toDecimalAmount };
+// convert unit to balance
+function toPlanckUnitAmount(amount:number , api: ApiPromise) {
+    const decimals = api.registry.chainDecimals[0];
+    const planckPerWestend = new BN(decimals); // 1 Westend = 1,000,000,000,000 Planck
+    const planckAmount = new BN(amount).mul(planckPerWestend);
+    //return with westend token chainRegistry
+    return planckAmount.toString() + " " + api.registry.chainTokens[0];
+}
+export  { toDecimal, toPlanckUnit, toDecimalAmount , toPlanckUnitAmount};

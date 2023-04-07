@@ -1,6 +1,6 @@
 import '@polkadot/api-augment';
 import '@polkadot/types-augment';
-import { toPlanckUnit, toDecimal, toDecimalAmount } from '../utils/unitConversions';
+import { toPlanckUnit, toDecimal } from '../utils/unitConversions';
 import { Keyring } from '@polkadot/api';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import * as dotenv from 'dotenv'
@@ -45,11 +45,10 @@ async function main() {
    * 2. calculate transaction fees for a particular transaction amount while transferring tokens from sender account to receiver account and convert it to decimal format
    * 
    **/
-
-  console.log(`\n Requested amount: ${SENDER_AMOUNT}`);
-
   // Convert the transaction amount to planck unit
   const convertedAmount = toPlanckUnit(SENDER_AMOUNT, api);
+  console.log(`\n Requested amount: ${SENDER_AMOUNT} WND`);
+
   try {
     //API to calculate transaction fees from sender account to receiver account
     const info = await api.tx.balances
