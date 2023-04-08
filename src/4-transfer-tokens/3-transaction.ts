@@ -80,10 +80,11 @@ async function fetchBalances(api: ApiPromise) {
 
     // balance of the sender account after the transfer
     let { data: senderBalance } = await api.query.system.account(SENDER_ACCOUNT);
-    console.log(`\n Sender Account ${SENDER_ACCOUNT} has a balance of ` + toDecimal(senderBalance.free, api) + ` after the transfer`);
+    console.log(`\n Sender Account ${SENDER_ACCOUNT} has a balance of ` + toDecimal(senderBalance.free, api));
+    
     // balance of the receiver account after the transfer
     let { data: receiverBalance } = await api.query.system.account(RECEIVER_ACCOUNT);
-    console.log(`\n Receiver Account ${RECEIVER_ACCOUNT} has a balance of ` + toDecimal(receiverBalance.free, api) + ` after the transfer`);
+    console.log(`\n Receiver Account ${RECEIVER_ACCOUNT} has a balance of ` + toDecimal(receiverBalance.free, api));
 
 }
 
@@ -103,10 +104,6 @@ async function fetchAccountInfo(SENDER_ACCOUNT: string, SENDER_MNEMONIC: string,
     // instantiate the sender account from the mnemonic
     const keyring = new Keyring({ type: 'sr25519' });
     const account = keyring.addFromUri(SENDER_MNEMONIC);
-
-    //API call to retrieve the balance of the sender account
-    let { data } = await api.query.system.account(SENDER_ACCOUNT);
-    console.log(`\n Account ${SENDER_ACCOUNT} has a balance of ${toDecimal(data.free, api)}`);
     return account;
 }
 
