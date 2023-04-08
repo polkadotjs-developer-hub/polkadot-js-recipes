@@ -45,8 +45,8 @@ async function main() {
   const account = await fetchAccountInfo(SENDER_ACCOUNT, SENDER_MNEMONIC, api);
 
   /**
-   * 2. calculate transaction fees for a particular transaction amount while 
-   *   transferring tokens from sender account to receiver account and convert it to decimal format
+   * 2. calculate transaction fees for a particular transaction amount while transferring tokens from sender account 
+   *    to receiver account and convert it to decimal format
    * 
    **/
   const planckAmount = await fetchConvertedAmount(SENDER_AMOUNT, RECEIVER_ACCOUNT, account, api);
