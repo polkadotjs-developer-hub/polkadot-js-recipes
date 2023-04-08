@@ -98,7 +98,7 @@ async function signedTransfer(api: ApiPromise, convertedAmount: bigint, account:
         console.log(`\n Transaction finalized at blockHash : ${status.asFinalized}`);
         console.log(`\n Check block status for finalized transaction on the Subscan explorer : https://westend.subscan.io/block/${status.asFinalized}`);
         console.log(`\n######################################## Balance after transfer ############################################`);
-        //disconnect from the node after fetchBalances() is executed
+        
         await fetchBalances(api);
         console.log(`\n Check transaction status on the Subscan explorer : https://westend.subscan.io/extrinsic/${txHash}`);
         await disconnect(api);
