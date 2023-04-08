@@ -59,7 +59,7 @@ async function main() {
     console.log(`\n######################################## Transaction failed ################################################`);
     console.log(`\n Transaction failed with ${error}`);
 
-    console.log(`\n######################################## Stack trace ####################################################### \n`);
+    console.log(`\n######################################## Stack trace #######################################################`);
     console.error(error.stack);
 
   }
