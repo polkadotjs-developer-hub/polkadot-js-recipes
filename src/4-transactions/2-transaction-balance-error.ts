@@ -4,6 +4,7 @@ import { toPlanckUnit, toDecimal, toDecimalAmount } from '../utils/unitConversio
 import { Keyring } from '@polkadot/api';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import * as dotenv from 'dotenv'
+import { calculateTransactionFees, fetchAccountInfo, fetchBalances } from '../utils/transactionUtils';
 dotenv.config()
 
 /**
@@ -32,37 +33,19 @@ async function main() {
   console.log(`\n######################################## Transaction initiating ############################################`);
 
   /**
-   * 1. Retrieve the initial balance of the account.
+   * 1. Retrieve the initial balance of the account of the sender and receiver account.
    * 
    */
+  const account = await fetchAccountInfo(SENDER_MNEMONIC, api);
+  await fetchBalances(api, SENDER_ACCOUNT, RECEIVER_ACCOUNT);
 
-  const keyring = new Keyring({ type: 'sr25519' });
-  const senderAccount = keyring.addFromUri(SENDER_MNEMONIC);
-  let { data } = await api.query.system.account(SENDER_ACCOUNT);
-  console.log(`\n Account ${SENDER_ACCOUNT} has a balance of ${data.free}`);
-
-  console.log(`\n Requested amount: ${SENDER_AMOUNT}`);
 
   /**
    * 2. calculate transaction fees for a particular transaction amount while transferring tokens from sender account to receiver account and convert it to decimal format
    * 
    **/
 
-  const convertedAmount = toPlanckUnit(SENDER_AMOUNT, api);
-
-  //API to calculate transaction fees from sender account to receiver account
-  const info = await api.tx.balances
-    .transfer(RECEIVER_ACCOUNT, convertedAmount)
-    .paymentInfo(senderAccount);
-
-  // Convert the transaction fees to a human readable format
-  let transactionFees = toDecimalAmount(info.partialFee, api);
-  console.log(`\n Transaction fees: ${transactionFees}`);
-
-  // Calculate the total amount to be transferred
-  let totalAmount = SENDER_AMOUNT + transactionFees;
-  console.log(`\n Total amount = requested amount(${SENDER_AMOUNT}) + transaction fees(${transactionFees}) : ${totalAmount}`);
-
+  const planckAmount = await calculateTransactionFees(SENDER_AMOUNT, RECEIVER_ACCOUNT, account, api);
 
   /**
    * 3. Handle transaction errors while transferring tokens from the sender account to the receiver account
@@ -71,8 +54,8 @@ async function main() {
 
   //API to transfer tokens from the sender account to the receiver account
   await api.tx.balances
-    .transfer(RECEIVER_ACCOUNT, convertedAmount)
-    .signAndSend(senderAccount, ({ dispatchError, txHash }) => {
+    .transfer(RECEIVER_ACCOUNT, planckAmount)
+    .signAndSend(account, async ({ dispatchError, txHash }) => {
 
       // in case of error, the dispatchError is set and we can display the error details
       if (dispatchError) {
@@ -83,7 +66,7 @@ async function main() {
           console.log(`\n######################################## Transaction failed ################################################`);
           console.log(`\n Transaction failed with error: ${section}.${name} : ${docs.join(' ')}`);
           console.log(`\n Check failed transaction status on the Subscan explorer : https://westend.subscan.io/extrinsic/${txHash}`);
-
+          await api.disconnect();
         } else {
           // Other, CannotLookup, BadOrigin, no extra info
           console.log(dispatchError.toString());

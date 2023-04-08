@@ -11,8 +11,10 @@ import { Keyring } from '@polkadot/api';
  * @param api 
  * @returns 
  */
-async function fetchConvertedAmount(SENDER_AMOUNT: number, RECEIVER_ACCOUNT: string, account: KeyringPair, api: ApiPromise) {
+async function calculateTransactionFees(SENDER_AMOUNT: number, RECEIVER_ACCOUNT: string, account: KeyringPair, api: ApiPromise) {
     console.log(`\n Requested amount: ${addChainTokens(SENDER_AMOUNT, api)}`);
+    
+    // Convert the amount to be transferred from decimal format to planck unit
     const convertedAmount = toPlanckUnit(SENDER_AMOUNT, api);
 
     //API to retrieve the transaction fees for a particular transaction amount
@@ -72,17 +74,16 @@ async function signedTransfer(api: ApiPromise, convertedAmount: bigint, account:
 }
 
 /**
- * 
- * @param SENDER_ACCOUNT sender account address
+ * fetch the account information by passing the sender account address and mnemonic
  * @param SENDER_MNEMONIC sender account mnemonic
  * @param api 
  * @returns 
  */
-async function fetchAccountInfo(SENDER_ACCOUNT: string, SENDER_MNEMONIC: string, api: ApiPromise) {
+async function fetchAccountInfo(SENDER_MNEMONIC: string, api: ApiPromise) {
     // instantiate the sender account from the mnemonic
     const keyring = new Keyring({ type: 'sr25519' });
     const account = keyring.addFromUri(SENDER_MNEMONIC);
     return account;
 }
 
-export {fetchConvertedAmount, fetchBalances, signedTransfer, fetchAccountInfo};
+export {calculateTransactionFees, fetchBalances, signedTransfer, fetchAccountInfo};

@@ -1,7 +1,7 @@
 import '@polkadot/api-augment';
 import '@polkadot/types-augment';
 import { ApiPromise, WsProvider } from '@polkadot/api';
-import { fetchConvertedAmount, fetchBalances, signedTransfer, fetchAccountInfo } from '../utils/transactionUtils';
+import { calculateTransactionFees, fetchBalances, signedTransfer, fetchAccountInfo } from '../utils/transactionUtils';
 import * as dotenv from 'dotenv'
 dotenv.config()
 
@@ -40,22 +40,20 @@ async function main() {
      * 1. Retrieve the initial balance of the account.
      * 
      */
-
-    const account = await fetchAccountInfo(SENDER_ACCOUNT, SENDER_MNEMONIC, api);
+    const account = await fetchAccountInfo(SENDER_MNEMONIC, api);
 
     /**
      * 2. calculate transaction fees for a particular transaction amount while 
      *   transferring tokens from sender account to receiver account and convert it to decimal format
      * 
      **/
-    const planckAmount = await fetchConvertedAmount(SENDER_AMOUNT, RECEIVER_ACCOUNT, account, api);
+    const planckAmount = await calculateTransactionFees(SENDER_AMOUNT, RECEIVER_ACCOUNT, account, api);
 
 
     /**
      * 3. Transfer tokens from the sender account to the receiver account and print the transaction hash
      * 
      **/
-
     await signedTransfer(api, planckAmount, account, RECEIVER_ACCOUNT);
 
 
