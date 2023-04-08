@@ -1,10 +1,9 @@
 import '@polkadot/api-augment';
 import '@polkadot/types-augment';
-import { fetchBalances, fetchAccountInfo } from '../utils/transactionUtils';
+import { fetchBalances, fetchAccountInfo, fetchConvertedAmount } from '../utils/transactionUtils';
 import { KeyringPair } from '@polkadot/keyring/types';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import * as dotenv from 'dotenv'
-import { fetchConvertedAmount } from './fetchConvertedAmount';
 dotenv.config()
 
 /**
