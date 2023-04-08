@@ -93,8 +93,9 @@ async function main() {
     });
 
 
-  //disconnect from the chain
-  api.disconnect();
+
+    //disconnect from the chain
+    api.disconnect();
 }
 
 
