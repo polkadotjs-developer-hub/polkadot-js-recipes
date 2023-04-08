@@ -1,10 +1,10 @@
 import '@polkadot/api-augment';
 import '@polkadot/types-augment';
-import { toPlanckUnit, toDecimal, toDecimalAmount, addChainTokens } from '../utils/unitConversions';
-import { Keyring } from '@polkadot/api';
+import { fetchBalances, fetchAccountInfo } from '../utils/transactionUtils';
 import { KeyringPair } from '@polkadot/keyring/types';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import * as dotenv from 'dotenv'
+import { fetchConvertedAmount } from './fetchConvertedAmount';
 dotenv.config()
 
 /**
@@ -33,7 +33,7 @@ async function main() {
 
   console.log(`\n######################################## Balance before transfer ############################################`);
 
-  await fetchBalances(api);
+  await fetchBalances(api, SENDER_ACCOUNT, RECEIVER_ACCOUNT);
 
   console.log(`\n######################################## Transaction initiating ############################################`);
 
@@ -70,18 +70,6 @@ async function disconnect(api: ApiPromise) {
   console.log('\n Disconnected from the API');
 }
 
-async function fetchBalances(api: ApiPromise) {
-
-  // balance of the sender account after the transfer
-  let { data: senderBalance } = await api.query.system.account(SENDER_ACCOUNT);
-  console.log(`\n Sender Account ${SENDER_ACCOUNT} has a balance of ` + toDecimal(senderBalance.free, api));
-
-  // balance of the receiver account after the transfer
-  let { data: receiverBalance } = await api.query.system.account(RECEIVER_ACCOUNT);
-  console.log(`\n Receiver Account ${RECEIVER_ACCOUNT} has a balance of ` + toDecimal(receiverBalance.free, api));
-
-}
-
 async function signedTransfer(api: ApiPromise, convertedAmount: bigint, account: KeyringPair) {
 
   //API call to transfer tokens from the sender account to the receiver account
@@ -99,40 +87,12 @@ async function signedTransfer(api: ApiPromise, convertedAmount: bigint, account:
         console.log(`\n Check block status for finalized transaction on the Subscan explorer : https://westend.subscan.io/block/${status.asFinalized}`);
         console.log(`\n######################################## Balance after transfer ############################################`);
         
-        await fetchBalances(api);
+        await fetchBalances(api, SENDER_ACCOUNT, RECEIVER_ACCOUNT);
         console.log(`\n Check transaction status on the Subscan explorer : https://westend.subscan.io/extrinsic/${txHash}`);
         await disconnect(api);
       }
     });
 
-  // Redirect to the transaction hash on the Subscan explorer
-
-}
-
-async function fetchAccountInfo(SENDER_ACCOUNT: string, SENDER_MNEMONIC: string, api: ApiPromise) {
-  // instantiate the sender account from the mnemonic
-  const keyring = new Keyring({ type: 'sr25519' });
-  const account = keyring.addFromUri(SENDER_MNEMONIC);
-  return account;
 }
 
 
-async function fetchConvertedAmount(SENDER_AMOUNT: number, RECEIVER_ACCOUNT: string, account: KeyringPair, api: ApiPromise) {
-  console.log(`\n Requested amount: ${addChainTokens(SENDER_AMOUNT, api)}`);
-  const convertedAmount = toPlanckUnit(SENDER_AMOUNT, api);
-
-  //API to retrieve the transaction fees for a particular transaction amount
-  const info = await api.tx.balances
-    .transfer(RECEIVER_ACCOUNT, convertedAmount)
-    .paymentInfo(account);
-
-  // Convert the transaction fees generated in planck unit to decimal format
-  let transactionFees = toDecimalAmount(info.partialFee, api);
-  console.log(`\n Transaction fees: ${addChainTokens(transactionFees, api)}`);
-
-  // Calculate the total amount to be transferred
-  let totalAmount = SENDER_AMOUNT + transactionFees;
-  console.log(`\n Total amount = Requested amount(${addChainTokens(SENDER_AMOUNT, api)}) + Transaction fees(${addChainTokens(transactionFees, api)}) : ${addChainTokens(totalAmount, api)}`);
-
-  return convertedAmount;
-}
