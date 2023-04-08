@@ -31,6 +31,7 @@ async function main() {
 
     console.log(`\n######################################## Balance before transfer ############################################`);
 
+    // fetch the balance of the sender and receiver account before the transfer
     await fetchBalances(api, SENDER_ACCOUNT, RECEIVER_ACCOUNT);
 
     console.log(`\n######################################## Transaction initiating ############################################`);
@@ -64,6 +65,7 @@ async function main() {
      **/
     console.log(`\n######################################## Balance after transfer ############################################`);
 
+    // fetch the balance of the sender and receiver account after the transfer
     await fetchBalances(api, SENDER_ACCOUNT, RECEIVER_ACCOUNT);
 
     //disconnect from the chain

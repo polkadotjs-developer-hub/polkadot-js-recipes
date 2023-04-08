@@ -32,6 +32,7 @@ async function main() {
 
   console.log(`\n######################################## Balance before transfer ############################################`);
 
+  // fetch the balance of the sender and receiver account after the transfer
   await fetchBalances(api, SENDER_ACCOUNT, RECEIVER_ACCOUNT);
 
   console.log(`\n######################################## Transaction initiating ############################################`);
@@ -85,7 +86,8 @@ async function signedTransfer(api: ApiPromise, convertedAmount: bigint, account:
         console.log(`\n Transaction finalized at blockHash : ${status.asFinalized}`);
         console.log(`\n Check block status for finalized transaction on the Subscan explorer : https://westend.subscan.io/block/${status.asFinalized}`);
         console.log(`\n######################################## Balance after transfer ############################################`);
-        
+
+        // fetch the balance of the sender and receiver account after the transfer
         await fetchBalances(api, SENDER_ACCOUNT, RECEIVER_ACCOUNT);
         console.log(`\n Check transaction status on the Subscan explorer : https://westend.subscan.io/extrinsic/${txHash}`);
         await disconnect(api);

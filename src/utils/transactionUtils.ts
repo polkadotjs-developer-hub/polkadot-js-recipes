@@ -3,6 +3,14 @@ import { KeyringPair } from '@polkadot/keyring/types';
 import { toDecimalAmount, toPlanckUnit, addChainTokens, toDecimal } from '../utils/unitConversions';
 import { Keyring } from '@polkadot/api';
 
+/**
+ * 
+ * @param SENDER_AMOUNT sender amount to be converted to planck unit
+ * @param RECEIVER_ACCOUNT receiver account address
+ * @param account sender account
+ * @param api 
+ * @returns 
+ */
 async function fetchConvertedAmount(SENDER_AMOUNT: number, RECEIVER_ACCOUNT: string, account: KeyringPair, api: ApiPromise) {
     console.log(`\n Requested amount: ${addChainTokens(SENDER_AMOUNT, api)}`);
     const convertedAmount = toPlanckUnit(SENDER_AMOUNT, api);
@@ -23,6 +31,14 @@ async function fetchConvertedAmount(SENDER_AMOUNT: number, RECEIVER_ACCOUNT: str
     return convertedAmount;
 }
 
+/**
+ * fetch the balance of the sender and receiver account
+ * 
+ * @param api
+ * @param SENDER_ACCOUNT sender account address
+ * @param RECEIVER_ACCOUNT receiver account address
+ * @returns
+ **/
 async function fetchBalances(api: ApiPromise, SENDER_ACCOUNT: string, RECEIVER_ACCOUNT: string) {
 
     // balance of the sender account after the transfer
@@ -35,6 +51,14 @@ async function fetchBalances(api: ApiPromise, SENDER_ACCOUNT: string, RECEIVER_A
 
 }
 
+
+/**
+ * 
+ * @param api 
+ * @param convertedAmount amount to be transferred in planck unit
+ * @param account sender account
+ * @param RECEIVER_ACCOUNT receiver account address
+ */
 async function signedTransfer(api: ApiPromise, convertedAmount: bigint, account: KeyringPair, RECEIVER_ACCOUNT: string) {
 
     //API call to transfer tokens from the sender account to the receiver account
@@ -47,6 +71,13 @@ async function signedTransfer(api: ApiPromise, convertedAmount: bigint, account:
 
 }
 
+/**
+ * 
+ * @param SENDER_ACCOUNT sender account address
+ * @param SENDER_MNEMONIC sender account mnemonic
+ * @param api 
+ * @returns 
+ */
 async function fetchAccountInfo(SENDER_ACCOUNT: string, SENDER_MNEMONIC: string, api: ApiPromise) {
     // instantiate the sender account from the mnemonic
     const keyring = new Keyring({ type: 'sr25519' });
