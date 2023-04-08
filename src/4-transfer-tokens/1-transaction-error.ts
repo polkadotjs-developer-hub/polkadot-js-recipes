@@ -55,9 +55,13 @@ async function main() {
       .transfer(RECEIVER_ACCOUNT, convertedAmount)
       .paymentInfo(senderAccount);
 
-  } catch (error) {
+  } catch (error: any) {
     console.log(`\n######################################## Transaction failed ################################################`);
     console.log(`\n Transaction failed with ${error}`);
+
+    console.log(`\n######################################## Stack trace ####################################################### \n`);
+    console.error(error.stack);
+
   }
   //disconnect from the chain
   api.disconnect();
