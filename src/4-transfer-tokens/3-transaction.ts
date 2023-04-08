@@ -31,6 +31,10 @@ async function main() {
     // Create a new instance of the api
     const api = await ApiPromise.create({ provider: wsProvider, noInitWarn: true });
 
+    console.log(`\n######################################## Balance before transfer ############################################`);
+
+    await fetchBalances(api);
+
     console.log(`\n######################################## Transaction initiating ############################################`);
 
     /**
@@ -60,8 +64,9 @@ async function main() {
      * 4. Retrieve the balance of the sender and receiver account after the transfer
      *  
      **/
+    console.log(`\n######################################## Balance after transfer ############################################`);
 
-    await fetchBalanceAfterTransfer(api);
+    await fetchBalances(api);
 
     //disconnect from the chain
     api.disconnect();
@@ -71,9 +76,7 @@ async function main() {
 
 main().catch(console.error);
 
-async function fetchBalanceAfterTransfer(api: ApiPromise) {
-
-    console.log(`\n######################################## Balance after transfer ############################################`);
+async function fetchBalances(api: ApiPromise) {
 
     // balance of the sender account after the transfer
     let { data: senderBalance } = await api.query.system.account(SENDER_ACCOUNT);
@@ -117,13 +120,13 @@ async function fetchConvertedAmount(SENDER_AMOUNT: number, RECEIVER_ACCOUNT: str
         .transfer(RECEIVER_ACCOUNT, convertedAmount)
         .paymentInfo(account);
 
-     // Convert the transaction fees generated in planck unit to decimal format
-     let transactionFees = toDecimalAmount(info.partialFee, api);
-     console.log(`\n Transaction fees: ${addChainTokens(transactionFees,api)}`);
- 
-     // Calculate the total amount to be transferred
-     let totalAmount = SENDER_AMOUNT + transactionFees;
-     console.log(`\n Total amount = Requested amount(${addChainTokens(SENDER_AMOUNT, api)}) + Transaction fees(${addChainTokens(transactionFees,api)}) : ${addChainTokens(totalAmount,api)}`);
- 
+    // Convert the transaction fees generated in planck unit to decimal format
+    let transactionFees = toDecimalAmount(info.partialFee, api);
+    console.log(`\n Transaction fees: ${addChainTokens(transactionFees, api)}`);
+
+    // Calculate the total amount to be transferred
+    let totalAmount = SENDER_AMOUNT + transactionFees;
+    console.log(`\n Total amount = Requested amount(${addChainTokens(SENDER_AMOUNT, api)}) + Transaction fees(${addChainTokens(transactionFees, api)}) : ${addChainTokens(totalAmount, api)}`);
+
     return convertedAmount;
 }
