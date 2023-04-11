@@ -37,7 +37,7 @@ async function main() {
 
   const extrinsics = signedBlock.block.extrinsics;
   extrinsics.forEach((extrinsic, index) => {
-    console.log(`Extrinsic ${index}:`);
+    console.log(`\nExtrinsic ${index}:`);
     console.log(`  Method: ${extrinsic.method.section}.${extrinsic.method.method}`);
     console.log(`  Args: ${extrinsic.method.args.map((arg) => arg.toString())}`);
     console.log(`  Signer: ${extrinsic.signer.toString()}`);

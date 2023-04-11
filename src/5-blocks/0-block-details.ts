@@ -31,13 +31,13 @@ async function main() {
 
   console.log(`\n######################################## Block details ############################################`);
   // Print block details
-  console.log(`Block hash: ${signedBlock.block.hash}`);
-  console.log(`Block number: ${signedBlock.block.header.number}`);
-  console.log(`Parent hash: ${signedBlock.block.header.parentHash}`);
-  console.log(`State root: ${signedBlock.block.header.stateRoot}`);
-  console.log(`Extrinsics root: ${signedBlock.block.header.extrinsicsRoot}`);
-  console.log(`Digest logs: ${signedBlock.block.header.digest.logs}`);
-  console.log(`Extrinsics count: ${signedBlock.block.extrinsics.length}`);
+  console.log(`\n Block hash: ${signedBlock.block.hash}`);
+  console.log(`\n Block number: ${signedBlock.block.header.number}`);
+  console.log(`\n Parent hash: ${signedBlock.block.header.parentHash}`);
+  console.log(`\n State root: ${signedBlock.block.header.stateRoot}`);
+  console.log(`\n Extrinsics root: ${signedBlock.block.header.extrinsicsRoot}`);
+  console.log(`\n Digest logs: ${signedBlock.block.header.digest.logs}`);
+  console.log(`\n Extrinsics count: ${signedBlock.block.extrinsics.length}`);
 
   //disconnect from the chain
   api.disconnect();
