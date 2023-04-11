@@ -21,9 +21,7 @@ async function main() {
      * 1. Retrieve the block hash of the block and fetch block details
      *    
      */
-
-    // Returns a decorated API instance at a specific block hash
-    const apiAt = await api.at(blockHash);
+    
     // Get the block for the block hash
     const signedBlock = await api.rpc.chain.getBlock(blockHash);
 
