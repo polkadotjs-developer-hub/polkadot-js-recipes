@@ -10,7 +10,8 @@
 		"build:dev": "./node_modules/.bin/tsc --pretty --declaration --watch",
 		"clean": "./node_modules/.bin/rimraf build",
 		"update": "./node_modules/.bin/ncu -u && yarn",
-		"lint": "eslint . --ext .ts --fix",
+		"lint": "eslint . --ext .ts",
+		"lint-fix": "eslint . --ext .ts --fix",
 		"format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
 	},
 	"author": "@muddlebee",
