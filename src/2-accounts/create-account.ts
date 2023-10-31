@@ -20,7 +20,7 @@ async function main() {
 
   // Create mnemonic string for your own account using BIP39
   const MNEMONIC = mnemonicGenerate()
-  console.log('\n\x1b[36m%s\x1b[0m', ` Save the Mnenomic : `);  //cyan
+  console.log(` Save the Mnenomic : `);  //cyan
   console.log(` ${MNEMONIC}`)
 
 
@@ -33,7 +33,7 @@ async function main() {
   const newAccount = await keyring.addFromUri(`${MNEMONIC}`);
 
   // Display the metadata name & Substrate generic ss58Format encoded address
-  console.log('\n\x1b[36m%s\x1b[0m', ` Save the Address : `);  //cyan
+  console.log(` Save the Address : `);  //cyan
   console.log(` ${newAccount.address}`)
 
   //disconnect from the chain
